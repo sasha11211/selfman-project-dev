@@ -23,7 +23,7 @@ public class AuthorizationConfiguration {
         http.csrf(csrf -> csrf.disable());
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
         http.authorizeHttpRequests(authorize -> authorize.
-        		dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
+        		dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
 				.requestMatchers("/customer/register")
 					.permitAll()
 				.requestMatchers("/customer/user/{email}/role/{role}")

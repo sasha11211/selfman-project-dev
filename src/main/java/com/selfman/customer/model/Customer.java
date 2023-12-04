@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Getter;
@@ -12,13 +11,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Document(collection = "customers")
+@Document(collection = "customers_test")
 public class Customer {
-	@Id
-	String id;
 	String firstName;
     String lastName;
-    @Indexed(unique = true)
+    @Id
     String email;
     String password;
     String country;
