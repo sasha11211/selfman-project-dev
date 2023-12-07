@@ -1,5 +1,7 @@
 package com.selfman.provider.service;
 
+import java.util.Set;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,11 +13,15 @@ import com.selfman.provider.dto.ProviderDto;
 import com.selfman.provider.dto.ProviderRegisterDto;
 import com.selfman.provider.dto.ProviderRemoveDto;
 import com.selfman.provider.dto.ProviderUpdateDto;
+import com.selfman.provider.dto.SocialMediaDto;
 import com.selfman.provider.exceptions.ProviderExistsExeption;
 import com.selfman.provider.exceptions.ProviderNotFoundException;
+import com.selfman.provider.model.ContactInfo;
 import com.selfman.provider.model.Provider;
+import com.selfman.provider.model.SocialMedia;
 
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 @Service
 @RequiredArgsConstructor
@@ -48,10 +54,15 @@ public class ProviderServiceImpl implements ProviderService, CommandLineRunner {
 		provider.setKeywords(providerUpdateDto.getKeywords());
 		provider.setProducts(providerUpdateDto.getProducts());
 		provider.setFounded(providerUpdateDto.getFounded());
-		provider.setContactInfo(provider.getContactInfo());
-		provider.setSocialMedia(provider.getSocialMedia());
-		if (provider.getName() != null && provider.getIndustry() != null
-				&& provider.getProducts() != null) {
+
+		Set<SocialMediaDto> socialMediaDtoSet = providerUpdateDto.getSocialMedia();
+		socialMediaDtoSet.stream().forEach(System.out::println);
+//		for (SocialMediaDto socialMediaDto : socialMediaDtoSet) {
+//			
+//			provider.addSocialMedia(modelMapper.map(socialMediaDto, SocialMedia.class));
+//		}
+
+		if (provider.getName() != null && provider.getIndustry() != null && provider.getProducts() != null) {
 			provider.addRole("VERIFIED");
 		}
 		providerRepository.save(provider);
@@ -78,7 +89,7 @@ public class ProviderServiceImpl implements ProviderService, CommandLineRunner {
 		Provider provider = providerRepository.findById(email).orElseThrow(ProviderNotFoundException::new);
 		return modelMapper.map(provider, ProviderDto.class);
 	}
-	
+
 	@Override
 	public void run(String... args) throws Exception {
 		if (providerRepository.findById("admin").isEmpty()) {
