@@ -13,7 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-@Document(collection = "_selfman_businessrequests")
+@Document(collection = "businessrequests")
 public class BusinessRequests {
 	@Id
 	String id;

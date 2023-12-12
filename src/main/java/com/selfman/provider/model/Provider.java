@@ -14,7 +14,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-@Document(collection = "_selfman_provider")
+@Document(collection = "provider")
 public class Provider {	
     @Id
     String providerId;    

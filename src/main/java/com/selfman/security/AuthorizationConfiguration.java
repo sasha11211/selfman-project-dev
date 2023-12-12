@@ -48,7 +48,16 @@ public class AuthorizationConfiguration {
 					.access(new WebExpressionAuthorizationManager("#email == authentication.name or hasRole('ADMINISTRATOR')"))
 				.requestMatchers(HttpMethod.GET, "/business/provider/{email}")
 					.access(new WebExpressionAuthorizationManager("#email == authentication.name or hasRole('ADMINISTRATOR')"))
-										
+
+				.requestMatchers(HttpMethod.POST, "/provider/{email}/items")
+					 .access(new WebExpressionAuthorizationManager("#email == authentication.name"))
+				.requestMatchers(HttpMethod.PUT, "/provider/{email}/item/**")
+					 .access(new WebExpressionAuthorizationManager("#email == authentication.name"))
+				.requestMatchers(HttpMethod.DELETE,"/provider/{email}/item/**")
+					 .access(new WebExpressionAuthorizationManager("#email == authentication.name"))
+				.requestMatchers(HttpMethod.GET, "/provider/items/**")
+					 .authenticated()	
+					
 				.anyRequest()
 					.authenticated()
 		);
