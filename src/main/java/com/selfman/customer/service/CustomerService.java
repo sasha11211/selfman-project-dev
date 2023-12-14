@@ -1,7 +1,8 @@
 package com.selfman.customer.service;
 
+import org.springframework.http.ResponseEntity;
+
 import com.selfman.customer.dto.CustomerChangePasswordDto;
-import com.selfman.customer.dto.CustomerDto;
 import com.selfman.customer.dto.CustomerExtendedDto;
 import com.selfman.customer.dto.CustomerRegisterDto;
 import com.selfman.customer.dto.CustomerRemoveDto;
@@ -9,7 +10,7 @@ import com.selfman.customer.dto.CustomerUpdateDto;
 import com.selfman.customer.dto.RolesCustomerDto;
 
 public interface CustomerService {
-	CustomerDto registerCustomer(CustomerRegisterDto customerRegisterDto);
+	ResponseEntity<?> registerCustomer(CustomerRegisterDto customerRegisterDto);
 	
 	CustomerExtendedDto getCustomer(String email);
 

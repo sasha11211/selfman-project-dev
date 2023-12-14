@@ -6,7 +6,7 @@ import com.selfman.provider.products.dto.ProductsDto;
 
 public interface ProviderProductsService {
   
-	ResponseEntity<String> addProduct(String email, ProductsDto productsDto);
+	ResponseEntity<?> addProduct(String email, ProductsDto productsDto);
 	
 	ProductsDto updateProduct(String email, String productId, ProductsDto productsDto);
 	

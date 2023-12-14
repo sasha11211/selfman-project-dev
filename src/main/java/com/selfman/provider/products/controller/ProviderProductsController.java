@@ -22,7 +22,7 @@ public class ProviderProductsController {
 	final ProviderProductsService providerProductsService;
 
 	@PostMapping("/provider/{email}/items")
-	public ResponseEntity<String> addProduct(@PathVariable String email,@RequestBody ProductsDto productsDto) {
+	public ResponseEntity<?> addProduct(@PathVariable String email,@RequestBody ProductsDto productsDto) {
 		return providerProductsService.addProduct(email, productsDto);
 	}
 	

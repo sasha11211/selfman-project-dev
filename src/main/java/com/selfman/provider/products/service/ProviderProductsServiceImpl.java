@@ -20,7 +20,7 @@ public class ProviderProductsServiceImpl implements ProviderProductsService {
 	final ModelMapper modelMapper;
 
 	@Override
-	public ResponseEntity<String> addProduct(String email, ProductsDto productsDto) {
+	public ResponseEntity<?> addProduct(String email, ProductsDto productsDto) {
 		List<Products> products = productsRepositoty.findByNameIgnoreCaseAndProviderEmail(productsDto.getName(), email);
 		if (products.size() == 0) {
 			Products product = modelMapper.map(productsDto, Products.class);

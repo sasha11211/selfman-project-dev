@@ -2,6 +2,8 @@ package com.selfman.customer.service;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,15 +30,22 @@ public class CustomerServiceImpl implements CustomerService, CommandLineRunner {
 	final PasswordEncoder passwordEncoder;
 
 	@Override
-	public CustomerDto registerCustomer(CustomerRegisterDto customerRegisterDto) {
-		if (customerRepository.existsByEmail(customerRegisterDto.getEmail())) {
-			throw new CustomerExistsExeption("Customer with email: " + customerRegisterDto.getEmail() + " exist");
+	public ResponseEntity<?> registerCustomer(CustomerRegisterDto customerRegisterDto) {
+		try {
+			if (customerRepository.existsByEmail(customerRegisterDto.getEmail())) {
+				throw new CustomerExistsExeption("Customer with email: " + customerRegisterDto.getEmail() + " exist");
+			}
+			Customer customer = modelMapper.map(customerRegisterDto, Customer.class);
+			String password = passwordEncoder.encode(customerRegisterDto.getPassword());
+			customer.setPassword(password);
+			customerRepository.save(customer);
+			return ResponseEntity.ok(modelMapper.map(customer, CustomerDto.class));
+		} catch (CustomerExistsExeption e) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("internal server error");
 		}
-		Customer customer = modelMapper.map(customerRegisterDto, Customer.class);
-		String password = passwordEncoder.encode(customerRegisterDto.getPassword());
-		customer.setPassword(password);
-		customerRepository.save(customer);
-		return modelMapper.map(customer, CustomerDto.class);
+		
 	}
 
 	@Override

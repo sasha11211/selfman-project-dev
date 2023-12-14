@@ -3,6 +3,7 @@ package com.selfman.customer.controller;
 import java.security.Principal;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.selfman.customer.dto.CustomerChangePasswordDto;
-import com.selfman.customer.dto.CustomerDto;
 import com.selfman.customer.dto.CustomerExtendedDto;
 import com.selfman.customer.dto.CustomerRegisterDto;
 import com.selfman.customer.dto.CustomerRemoveDto;
@@ -31,7 +31,7 @@ public class CustomerController {
 	final CustomerService customerService;
 
 	@PostMapping("/register")
-	public CustomerDto registerCustomer(@RequestBody CustomerRegisterDto customerRegisterDto) {
+	public ResponseEntity<?> registerCustomer(@RequestBody CustomerRegisterDto customerRegisterDto) {
 		return customerService.registerCustomer(customerRegisterDto);
 	}
 
