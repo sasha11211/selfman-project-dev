@@ -2,6 +2,7 @@ package com.selfman.provider.products.service;
 
 import java.util.List;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.selfman.provider.products.dao.ProductsRepositoty;
 import com.selfman.provider.products.dto.ProductsDto;
@@ -19,14 +20,14 @@ public class ProviderProductsServiceImpl implements ProviderProductsService {
 	final ModelMapper modelMapper;
 
 	@Override
-	public ProductsDto addProduct(String email, ProductsDto productsDto) {
+	public ResponseEntity<String> addProduct(String email, ProductsDto productsDto) {
 		List<Products> products = productsRepositoty.findByNameIgnoreCaseAndProviderEmail(productsDto.getName(), email);
-		products.forEach(System.out::println);
 		if (products.size() == 0) {
 			Products product = modelMapper.map(productsDto, Products.class);
 			product.setProviderEmail(email);
 			productsRepositoty.save(product);
-			return modelMapper.map(product, ProductsDto.class);
+			//return modelMapper.map(product, ProductsDto.class);
+			return ResponseEntity.ok().body("adding the item to the provider was successful");
 		}
 		throw new ProductExistsExeption();
 	}

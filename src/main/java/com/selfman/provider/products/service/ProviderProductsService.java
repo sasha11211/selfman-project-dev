@@ -1,10 +1,12 @@
 package com.selfman.provider.products.service;
 
+import org.springframework.http.ResponseEntity;
+
 import com.selfman.provider.products.dto.ProductsDto;
 
 public interface ProviderProductsService {
   
-	ProductsDto addProduct(String email, ProductsDto productsDto);
+	ResponseEntity<String> addProduct(String email, ProductsDto productsDto);
 	
 	ProductsDto updateProduct(String email, String productId, ProductsDto productsDto);
 	

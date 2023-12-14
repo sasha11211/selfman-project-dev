@@ -21,10 +21,10 @@ public class AuthorizationConfiguration {
 	public SecurityFilterChain configure(HttpSecurity http) throws Exception {
 		http.httpBasic(Customizer.withDefaults());
         http.csrf(csrf -> csrf.disable());
-        http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)); 
         http.authorizeHttpRequests(authorize -> authorize.
-//        		dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
-        		dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
+        		dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
+ //       		dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
 				.requestMatchers("/customer/register", "/provider/register")
 					.permitAll()
 					
@@ -48,7 +48,7 @@ public class AuthorizationConfiguration {
 					.access(new WebExpressionAuthorizationManager("#email == authentication.name or hasRole('ADMINISTRATOR')"))
 				.requestMatchers(HttpMethod.GET, "/business/provider/{email}")
 					.access(new WebExpressionAuthorizationManager("#email == authentication.name or hasRole('ADMINISTRATOR')"))
-
+			
 				.requestMatchers(HttpMethod.POST, "/provider/{email}/items")
 					 .access(new WebExpressionAuthorizationManager("#email == authentication.name"))
 				.requestMatchers(HttpMethod.PUT, "/provider/{email}/item/**")

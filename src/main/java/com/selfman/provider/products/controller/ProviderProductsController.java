@@ -1,5 +1,6 @@
 package com.selfman.provider.products.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +22,7 @@ public class ProviderProductsController {
 	final ProviderProductsService providerProductsService;
 
 	@PostMapping("/provider/{email}/items")
-	public ProductsDto addProduct(@PathVariable String email,@RequestBody ProductsDto productsDto) {
+	public ResponseEntity<String> addProduct(@PathVariable String email,@RequestBody ProductsDto productsDto) {
 		return providerProductsService.addProduct(email, productsDto);
 	}
 	
